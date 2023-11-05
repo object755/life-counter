@@ -1,0 +1,1 @@
+let age = document.querySelector(".age-number").value;
