@@ -1,5 +1,7 @@
 .age_counter {
     padding: 10px;
+    display: flex;
+    gap: 10px;
 }
 .life_nodes {
     display: flex;
