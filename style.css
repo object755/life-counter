@@ -1,0 +1,18 @@
+.age_counter {
+    padding: 10px;
+}
+.life_nodes {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-start;
+    gap: 1px;
+    height: 50vh;
+}
+
+.life_node {
+    width: 5px;
+    height: 5px;
+    border: 1px solid black;
+}
