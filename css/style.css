@@ -33,8 +33,8 @@
   border: 1px solid black;
 }
 .life_nodes div[data-size="1"] {
-  width: 2px;
-  height: 2px;
+  width: 3.3px;
+  height: 3.3px;
   margin: 1.5px;
 }
 .life_nodes div[data-size="2"] {

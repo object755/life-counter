@@ -93,7 +93,7 @@ function getFormData() {
         
         case 'weeks':
             nodeName = "Weeks";
-            nodesInYear = 52;
+            nodesInYear = 52.143;
             break;
         
         case 'years':
