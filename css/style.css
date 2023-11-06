@@ -1,20 +1,23 @@
 .container {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: flex-start;
 }
-
-.age_counter {
+.container-age {
+  display: flex;
+  flex-direction: column;
   padding: 10px;
   display: flex;
   gap: 10px;
+}
+.container-age-controls {
+  display: flex;
 }
 
 .age_current {
   width: fit-content;
 }
-
 .age_total {
   width: 50px;
 }
@@ -22,15 +25,31 @@
 .life_nodes {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
-  align-content: flex-start;
-  justify-content: flex-start;
-  gap: 1px;
-  height: 50vh;
+  width: 85%;
+  padding: 10px;
+  margin: 0 auto;
 }
-
-.life_node {
+.life_nodes div {
+  border: 1px solid black;
+  margin: 2px;
+}
+.life_nodes div[data-size="1"] {
+  width: 2px;
+  height: 2px;
+}
+.life_nodes div[data-size="2"] {
   width: 5px;
   height: 5px;
-  border: 1px solid black;
+}
+.life_nodes div[data-size="3"] {
+  width: 10px;
+  height: 10px;
+}
+
+.lived {
+  background-color: orange;
+}
+
+.node_size {
+  width: 100%;
 }/*# sourceMappingURL=style.css.map */
