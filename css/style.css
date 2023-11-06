@@ -21,6 +21,11 @@ body {
 .container-age-controls {
   display: flex;
 }
+.container-age-controls div {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
 
 .age_birth {
   width: fit-content;
@@ -39,7 +44,7 @@ body {
   border-radius: 8px;
 }
 .life_nodes div {
-  border: 1px solid rgb(67, 102, 191);
+  border: 1px solid rgb(40, 157, 175);
 }
 .life_nodes div[data-size="1"] {
   width: 3.3px;
@@ -57,17 +62,22 @@ body {
   margin: 2px;
 }
 
-.nodes-lived,
-.nodes-to_live {
+.nodes-to_live,
+label {
   color: #c8c8c8;
+}
+
+.nodes-lived {
+  color: rgb(33, 173, 66);
 }
 
 .nodes-left {
   color: #ff0606;
 }
 
-.lived {
-  background-color: #2bbd46;
+div.lived {
+  background-color: rgb(33, 173, 66);
+  border: 1px solid rgb(27, 82, 97);
 }
 
 .node_size {
