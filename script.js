@@ -1,16 +1,18 @@
 
 let ageTotal = document.querySelector(".age_total");
-let ageSpent = document.querySelector(".age_current");
+let birthDate = document.querySelector(".age_birth");
 let nodeSizeRange = document.querySelector(".node_size");
 
 ageTotal.addEventListener("input", renderLifeTotal);
-ageSpent.addEventListener("change", renderLifeSpent);
+birthDate.addEventListener("change", renderLifeSpent);
 nodeSizeRange.addEventListener("change", changeNodeSize);
+dataTypeSelect.addEventListener("change", renderLifeTotal)
 
 
 function renderLifeTotal() {
-    let weeksInYear = 52;
-    let nodesCount = ageTotal.value *  weeksInYear;
+    let [nodeName, nodesInYear] = getFormData();
+    
+    let nodesCount = ageTotal.value *  nodesInYear;
 
     let lifeNodesContainer = document.querySelector(".life_nodes");
 
@@ -18,37 +20,55 @@ function renderLifeTotal() {
 
     for (let i = 0; i < nodesCount; ++i) {
         let node = document.createElement('div');
+        
         node.dataset.size = nodeSizeRange.value ;
-        // node.className = 'life_node';
-
+        
         lifeNodesContainer.append(node);
     }
 
     let totalDaysToLive = lifeNodesContainer.childElementCount
-    document.querySelector(".nodes-to_live").innerHTML = `Weeks to live: ${totalDaysToLive}`;
+    document.querySelector(".nodes-to_live").innerHTML = `${nodeName} to live: ${totalDaysToLive}`;
     
-    console.log(`Total days: ${totalDaysToLive}`);
+    console.log(`Total ${nodeName} to live: ${totalDaysToLive}`);
     renderLifeSpent()
 }
 
 function renderLifeSpent() {
-    let weeksSpent = ageSpent.value;
-    let j = 5;
+    let [nodeName, nodesInYear] = getFormData();
 
-    const dateOfBirth = new Date(weeksSpent);
-
+    const dateOfBirth = new Date(birthDate.value);
     const currentDate = new Date();
-    const daysLived = Math.floor((currentDate - dateOfBirth) / (1000 * 60 * 60 * 24));
-    const weeksLived = Math.floor(daysLived / 7);
+
+    const timeDiff = currentDate - dateOfBirth;
+
+    const daysLived = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const weeksDiff = Math.floor(daysLived / 7);
+
+    let totalNodes;
+
+    switch(nodeName){
+        case("Days"):
+            totalNodes = daysLived;
+            break;
+        
+        case("Weeks"):
+            totalNodes = weeksDiff;
+            break;
+        
+        case("Years"):
+            totalNodes = Math.floor(daysLived / 365);
+            break;
+        
+    }
 
     let renderedNodes = document.querySelectorAll(".life_nodes > div");
 
     renderedNodes.forEach((node, id) => {
-        id < weeksLived ? node.className = "lived" : node.classList.remove("lived")
+        id < totalNodes ? node.className = "lived" : node.classList.remove("lived")
     })
 
-    document.querySelector(".nodes-lived").innerHTML = `Weeks lived: ${weeksLived}`;
-    console.log(`Total days lived: ${weeksLived}`);
+    document.querySelector(".nodes-lived").innerHTML = `${nodeName} lived: ${totalNodes}`;
+    console.log(`Total ${nodeName} lived: ${totalNodes}`);
     
 }
 
@@ -60,8 +80,28 @@ function changeNodeSize() {
     lifeNodesContainer.forEach(node => {
         node.dataset.size = sizeValue;
     })
-
 }
 
+function getFormData() {
+    let dateType = dataTypeSelect.value;
+    
+    switch(dateType) {
+        case 'days':
+            nodeName = "Days";
+            nodesInYear = 365;
+            break;
+        
+        case 'weeks':
+            nodeName = "Weeks";
+            nodesInYear = 52;
+            break;
+        
+        case 'years':
+            nodeName = "Years";
+            nodesInYear = 1;
+            break;
+    }
+
+    return [nodeName, nodesInYear];
+}
 renderLifeTotal()
-renderLifeSpent()

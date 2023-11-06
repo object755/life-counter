@@ -10,12 +10,18 @@
     <div class="container">
         
         <div class="container-age">
+            <select id="dataTypeSelect">
+                <!--Supplement an id here instead of using 'name'-->
+                <option value="days">By days</option>
+                <option value="weeks" selected>By weeks</option>
+                <option value="years">By years</option>
+            </select>
             <div class="container-age-controls">
                 <div>
-                    <input class="age_current" type="date" value="1990-01-01">
+                    <input class="age_birth" type="date" value="1994-01-01">
                 </div>
                 <div>
-                    <input class="age_total" type="number" value="50">
+                    <input class="age_total" type="number" value="30">
                 </div>
             </div>
 
