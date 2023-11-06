@@ -1,8 +1,13 @@
+body {
+    background-color: #16213E;
+}
+
 .container {
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
     align-items: flex-start;
+    gap: 10px;
 
     &-age {
         display: flex;
@@ -10,7 +15,8 @@
         padding: 10px;
         display: flex;
         gap: 10px;
-        // width: 20%;
+        background-color: #0F3460;
+        border-radius: 8px;
 
         &-controls {
             display: flex;
@@ -19,6 +25,7 @@
 }
 
 .age {
+    
     &_birth {
         width: fit-content;
     }
@@ -36,9 +43,11 @@
         width: 85%;
         padding: 10px;
         margin: 0 auto;
+        background-color: #0F3460;
+        border-radius: 8px;
 
         div {
-            border: 1px solid black;
+            border: 1px solid rgb(67, 102, 191);
             
         }
 
@@ -51,19 +60,28 @@
         div[data-size="2"] {
             width: 5px;
             height: 5px;
-            margin: 2px;
+            margin: 1.3px;
         }
 
         div[data-size="3"] {
             width: 10px;
             height: 10px;
-            margin: 3px;
+            margin: 2px;
         }
     }
 }
 
+.nodes-lived,
+.nodes-to_live {
+    color: #c8c8c8;
+}
+
+.nodes-left {
+    color: #ff0606;
+}
+
 .lived {
-    background-color: orange;
+    background-color: #2bbd46;
 }
 
 .node_size {

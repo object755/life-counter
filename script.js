@@ -4,7 +4,7 @@ let birthDate = document.querySelector(".age_birth");
 let nodeSizeRange = document.querySelector(".node_size");
 
 ageTotal.addEventListener("input", renderLifeTotal);
-birthDate.addEventListener("change", renderLifeSpent);
+birthDate.addEventListener("change", renderLifeTotal);
 nodeSizeRange.addEventListener("change", changeNodeSize);
 dataTypeSelect.addEventListener("change", renderLifeTotal)
 
@@ -30,10 +30,10 @@ function renderLifeTotal() {
     document.querySelector(".nodes-to_live").innerHTML = `${nodeName} to live: ${totalDaysToLive}`;
     
     console.log(`Total ${nodeName} to live: ${totalDaysToLive}`);
-    renderLifeSpent()
+    renderLifeSpent(totalDaysToLive)
 }
 
-function renderLifeSpent() {
+function renderLifeSpent(totalDaysToLive) {
     let [nodeName, nodesInYear] = getFormData();
 
     const dateOfBirth = new Date(birthDate.value);
@@ -68,7 +68,8 @@ function renderLifeSpent() {
     })
 
     document.querySelector(".nodes-lived").innerHTML = `${nodeName} lived: ${totalNodes}`;
-    console.log(`Total ${nodeName} lived: ${totalNodes}`);
+    document.querySelector(".nodes-left").innerHTML = `${nodeName} left: ${totalDaysToLive - totalNodes}`;
+    console.log(`Total ${nodeName} lived: ${totalDaysToLive - totalNodes}`);
     
 }
 
@@ -88,7 +89,7 @@ function getFormData() {
     switch(dateType) {
         case 'days':
             nodeName = "Days";
-            nodesInYear = 365;
+            nodesInYear = 365.25;
             break;
         
         case 'weeks':
