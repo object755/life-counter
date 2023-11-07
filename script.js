@@ -1,12 +1,25 @@
 
+let ageContainer = document.querySelector(".container-age");
 let ageTotal = document.querySelector(".age_total");
 let birthDate = document.querySelector(".age_birth");
 let nodeSizeRange = document.querySelector(".node_size");
+let addRange = document.querySelector(".add-button");
 
-ageTotal.addEventListener("input", renderLifeTotal);
-birthDate.addEventListener("change", renderLifeTotal);
+// ageTotal.addEventListener("input", renderLifeTotal);
+// birthDate.addEventListener("change", renderLifeTotal);
 nodeSizeRange.addEventListener("change", changeNodeSize);
-dataTypeSelect.addEventListener("change", renderLifeTotal)
+// dataTypeSelect.addEventListener("change", renderLifeTotal);
+addRange.addEventListener("click", addNewRange);
+
+
+ageContainer.addEventListener('change', (e) => {
+    let tagName = e.target.tagName;
+    if (tagName === "INPUT" || tagName === "SELECT") {
+        renderLifeTotal();
+    }
+})
+
+
 
 
 function renderLifeTotal() {
@@ -29,6 +42,10 @@ function renderLifeTotal() {
         lifeNodesContainer.append(node);
     }
 
+    document.querySelectorAll(".date_start-custom").forEach(node => {
+        node.value = birthDate.value;
+    })
+
     let totalDaysToLive = lifeNodesContainer.childElementCount
     document.querySelector(".nodes-to_live").innerHTML = `${nodeName} to live: ${totalDaysToLive}`;
     
@@ -37,12 +54,22 @@ function renderLifeTotal() {
 }
 
 function renderLifeSpent(totalDaysToLive) {
-    let [nodeName, nodesInYear] = getFormData();
+    let [nodeName] = getFormData();
+    let totalNodes = renderSelectedRange(birthDate.value, undefined)
 
-    const dateOfBirth = new Date(birthDate.value);
-    const currentDate = new Date();
+    document.querySelector(".nodes-lived").innerHTML = `${nodeName} lived: ${totalNodes}`;
+    document.querySelector(".nodes-left").innerHTML = `${nodeName} left: ${totalDaysToLive - totalNodes}`;
+    console.log(`Total ${nodeName} lived: ${totalDaysToLive - totalNodes}`);
+    
+}
 
-    const timeDiff = currentDate - dateOfBirth;
+function renderSelectedRange(startDate, endDate) {
+    let [nodeName] = getFormData();
+
+    startDate = new Date(startDate);
+    endDate = endDate ? new Date(endDate) : new Date();
+
+    const timeDiff = endDate - startDate;
 
     const daysLived = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
     const weeksDiff = Math.floor(daysLived / 7);
@@ -69,10 +96,7 @@ function renderLifeSpent(totalDaysToLive) {
         id < totalNodes ? node.className = "lived" : node.classList.remove("lived")
     })
 
-    document.querySelector(".nodes-lived").innerHTML = `${nodeName} lived: ${totalNodes}`;
-    document.querySelector(".nodes-left").innerHTML = `${nodeName} left: ${totalDaysToLive - totalNodes}`;
-    console.log(`Total ${nodeName} lived: ${totalDaysToLive - totalNodes}`);
-    
+    return totalNodes;
 }
 
 function changeNodeSize() {
@@ -106,5 +130,24 @@ function getFormData() {
     }
 
     return [nodeName, nodesInYear];
+}
+
+function addNewRange() {
+    let currentStartDate = birthDate.value;
+    let totalCustomRanges = document.querySelectorAll(".date_start-custom").length;
+    let menuContainer = document.querySelector(".container-age");
+    
+    let rangeControls = document.createElement("div");
+    rangeControls.classList.add("custom_range");
+
+    rangeControls.innerHTML = `<div>
+                                    <label>start date</label>
+                                    <input class="date_start-custom" data-custom-range="${totalCustomRanges+1}" type="date" value="${currentStartDate}">
+                                </div>
+                                <div>
+                                    <label>end date</label>
+                                    <input class="date_end-custom" data-custom-range="${totalCustomRanges+1}" type="date" value="${currentStartDate}">
+                                </div>`;
+    menuContainer.appendChild(rangeControls);
 }
 renderLifeTotal()

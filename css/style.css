@@ -2,6 +2,10 @@ body {
   background-color: #16213E;
 }
 
+p {
+  margin: 5px;
+}
+
 .container {
   display: flex;
   justify-content: flex-start;
@@ -64,7 +68,8 @@ body {
 }
 
 .nodes-to_live,
-label {
+label,
+p {
   color: #c8c8c8;
 }
 
@@ -83,4 +88,23 @@ div.lived {
 
 .node_size {
   width: 100%;
+}
+
+.add-range {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.add-button {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.custom_range {
+  display: flex;
+  justify-content: space-between;
+}
+.custom_range div {
+  width: 120px;
 }/*# sourceMappingURL=style.css.map */
