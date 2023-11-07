@@ -7,12 +7,12 @@ let addRange = document.querySelector(".add-button");
 
 // ageTotal.addEventListener("input", renderLifeTotal);
 // birthDate.addEventListener("change", renderLifeTotal);
-nodeSizeRange.addEventListener("change", changeNodeSize);
+nodeSizeRange.addEventListener("input", changeNodeSize);
 // dataTypeSelect.addEventListener("change", renderLifeTotal);
 addRange.addEventListener("click", addNewRange);
 
 
-ageContainer.addEventListener('change', (e) => {
+ageContainer.addEventListener('input', (e) => {
     let tagName = e.target.tagName;
     if (tagName === "INPUT" || tagName === "SELECT") {
         renderLifeTotal();
@@ -41,11 +41,6 @@ function renderLifeTotal() {
         
         lifeNodesContainer.append(node);
     }
-
-    document.querySelectorAll(".date_start-custom").forEach(node => {
-        node.value = birthDate.value;
-    })
-
     let totalDaysToLive = lifeNodesContainer.childElementCount
     document.querySelector(".nodes-to_live").innerHTML = `${nodeName} to live: ${totalDaysToLive}`;
     
@@ -55,46 +50,83 @@ function renderLifeTotal() {
 
 function renderLifeSpent(totalDaysToLive) {
     let [nodeName] = getFormData();
-    let totalNodes = renderSelectedRange(birthDate.value, undefined)
+    let totalNodes = renderSelectedRange();
+
+    document.querySelectorAll(".date_start-custom").forEach((node, id) => {
+        // node.value = birthDate.value;
+        
+        let nodeStartDate = node.value;
+        let nodeEndDate = document.querySelector(`[data-custom-range-end='${id+1}']`).value;
+        let color = randColor();
+        renderSelectedRange(nodeStartDate, nodeEndDate, color);
+    })
+
+
 
     document.querySelector(".nodes-lived").innerHTML = `${nodeName} lived: ${totalNodes}`;
     document.querySelector(".nodes-left").innerHTML = `${nodeName} left: ${totalDaysToLive - totalNodes}`;
     console.log(`Total ${nodeName} lived: ${totalDaysToLive - totalNodes}`);
     
+    function randColor() {
+        return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0').toUpperCase();
+    }
 }
 
-function renderSelectedRange(startDate, endDate) {
+function renderSelectedRange(startDate, endDate, color) {
     let [nodeName] = getFormData();
 
-    startDate = new Date(startDate);
+    let bDate = new Date(birthDate.value);
+    
+    startDate = startDate ? new Date(startDate) : '';
     endDate = endDate ? new Date(endDate) : new Date();
 
-    const timeDiff = endDate - startDate;
+    let [daysLived, weeksLived, yearsLived] = startDate ? calcTimeDiff(endDate, startDate) : calcTimeDiff(endDate, bDate);
 
-    const daysLived = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-    const weeksDiff = Math.floor(daysLived / 7);
+    
 
-    let totalNodes;
+    let totalNodes, diffNodes;
 
     switch(nodeName){
         case("Days"):
             totalNodes = daysLived;
+            [daysLived, weeksLived, yearsLived] = calcTimeDiff(startDate, bDate)
+            diffNodes = daysLived;
             break;
         
         case("Weeks"):
-            totalNodes = weeksDiff;
+            totalNodes = weeksLived;
+            [daysLived, weeksLived, yearsLived] = calcTimeDiff(startDate, bDate)
+            diffNodes = weeksLived;
             break;
         
         case("Years"):
-            totalNodes = Math.floor(daysLived / 365);
+            totalNodes = yearsLived;
+            [daysLived, weeksLived, yearsLived] = calcTimeDiff(startDate, bDate)
+            diffNodes = yearsLived;
             break;
     }
 
     let renderedNodes = document.querySelectorAll(".life_nodes > div");
 
     renderedNodes.forEach((node, id) => {
-        id < totalNodes ? node.className = "lived" : node.classList.remove("lived")
+        
+        if (!color) {
+            id < totalNodes ? node.className = "lived" : node.classList.remove("lived");
+        } else {                                                                                     //FIX HERE
+            id > diffNodes && id <= (totalNodes+diffNodes) ? node.style.backgroundColor = 'orange' : node.style.backgroundColor = '';
+        }
+        
     })
+
+    function calcTimeDiff(aDate, bDate) {
+        const timeDiff = aDate - bDate;
+
+        const daysLived = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        const weeksLived = Math.floor(daysLived / 7);
+        const yearsLived = Math.floor(daysLived / 365);
+
+        return [daysLived, weeksLived, yearsLived];
+    }
 
     return totalNodes;
 }
@@ -142,11 +174,11 @@ function addNewRange() {
 
     rangeControls.innerHTML = `<div>
                                     <label>start date</label>
-                                    <input class="date_start-custom" data-custom-range="${totalCustomRanges+1}" type="date" value="${currentStartDate}">
+                                    <input class="date_start-custom" data-custom-range-start="${totalCustomRanges+1}" type="date" value="${currentStartDate}">
                                 </div>
                                 <div>
                                     <label>end date</label>
-                                    <input class="date_end-custom" data-custom-range="${totalCustomRanges+1}" type="date" value="${currentStartDate}">
+                                    <input class="date_end-custom" data-custom-range-end="${totalCustomRanges+1}" type="date" value="${currentStartDate}">
                                 </div>`;
     menuContainer.appendChild(rangeControls);
 }

@@ -6,6 +6,11 @@ p {
   margin: 5px;
 }
 
+.flex {
+  display: flex;
+  gap: 10px;
+}
+
 .container {
   display: flex;
   justify-content: flex-start;
@@ -21,6 +26,7 @@ p {
   gap: 10px;
   background-color: #0F3460;
   border-radius: 8px;
+  min-width: 260px;
 }
 .container-age-controls {
   display: flex;
@@ -36,7 +42,7 @@ p {
   width: fit-content;
 }
 .age_total {
-  width: 50px;
+  width: 45px;
 }
 
 .life_nodes {
@@ -52,16 +58,31 @@ p {
   border: 1px solid rgb(40, 157, 175);
 }
 .life_nodes div[data-size="1"] {
-  width: 3.3px;
-  height: 3.3px;
-  margin: 1.5px;
-}
-.life_nodes div[data-size="2"] {
-  width: 5px;
-  height: 5px;
+  width: 3px;
+  height: 3px;
   margin: 1.3px;
 }
+.life_nodes div[data-size="2"] {
+  width: 3.3px;
+  height: 3.3px;
+  margin: 1.4px;
+}
 .life_nodes div[data-size="3"] {
+  width: 4.5px;
+  height: 4.5px;
+  margin: 1.5px;
+}
+.life_nodes div[data-size="4"] {
+  width: 6px;
+  height: 6px;
+  margin: 1.6px;
+}
+.life_nodes div[data-size="5"] {
+  width: 8px;
+  height: 8px;
+  margin: 1.8px;
+}
+.life_nodes div[data-size="6"] {
   width: 10px;
   height: 10px;
   margin: 2px;
