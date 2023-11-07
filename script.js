@@ -11,6 +11,9 @@ dataTypeSelect.addEventListener("change", renderLifeTotal)
 
 function renderLifeTotal() {
     let [nodeName, nodesInYear] = getFormData();
+
+    ageTotal.value = ageTotal.value > 150 ? 150 : ageTotal.value;
+    ageTotal.value = ageTotal.value < 0 ? 0 : ageTotal.value;
     
     let nodesCount = ageTotal.value *  nodesInYear;
 
@@ -58,7 +61,6 @@ function renderLifeSpent(totalDaysToLive) {
         case("Years"):
             totalNodes = Math.floor(daysLived / 365);
             break;
-        
     }
 
     let renderedNodes = document.querySelectorAll(".life_nodes > div");

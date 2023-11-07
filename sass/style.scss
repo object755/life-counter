@@ -20,6 +20,7 @@ body {
 
         &-controls {
             display: flex;
+            gap: 10px;
 
             div {
                 display: flex;
@@ -86,7 +87,7 @@ label {
 }
 
 .nodes-left {
-    color: #ff0606;
+    color: rgb(241, 11, 11);
 }
 
 div.lived {
