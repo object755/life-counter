@@ -11,15 +11,18 @@
         
         <div class="container-age">
             <div class="flex">
-                <select id="dataTypeSelect">
-                    <option value="days">By days</option>
-                    <option value="weeks" >By weeks</option>
-                    <option value="years" selected>By years</option>
-                </select>
                 <input class="node_size" type="range" min="1" max="6" value="2">
             </div>
             
             <div class="container-age-controls">
+                <div>
+                    <label for="dataTypeSelect">Show by</label>
+                    <select id="dataTypeSelect">
+                    <option value="days">days</option>
+                    <option value="weeks" >weeks</option>
+                    <option value="years" selected>years</option>
+                </select>
+                </div>
                 <div>
                     <label for="birthAge">Date of birth</label>
                     <input id="birthAge" class="age_birth" type="date" value="1970-01-01">

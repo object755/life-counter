@@ -1,14 +1,10 @@
-
 let ageContainer = document.querySelector(".container-age");
 let ageTotal = document.querySelector(".age_total");
 let birthDate = document.querySelector(".age_birth");
 let nodeSizeRange = document.querySelector(".node_size");
 let addRange = document.querySelector(".add-button");
 
-// ageTotal.addEventListener("input", renderLifeTotal);
-// birthDate.addEventListener("change", renderLifeTotal);
 nodeSizeRange.addEventListener("input", changeNodeSize);
-// dataTypeSelect.addEventListener("change", renderLifeTotal);
 addRange.addEventListener("click", addNewRange);
 
 
@@ -71,12 +67,11 @@ function renderLifeSpent(totalDaysToLive) {
     let totalNodes = renderSelectedRange();
 
     document.querySelectorAll(".date_start-custom").forEach((node, id) => {
-        // node.value = birthDate.value;
-        
         let rangeId = id+1
         let nodeStartDate = node.value;
         let nodeEndDate = document.querySelector(`[data-custom-range-end='${rangeId}']`).value;
         let color = randColor();
+        
         renderSelectedRange(nodeStartDate, nodeEndDate, rangeId, color);
     })
 
@@ -127,6 +122,17 @@ function renderSelectedRange(startDate, endDate, rangeId, color) {
 
     let renderedNodes = document.querySelectorAll(".life_nodes > div");
 
+    if (rangeId) {
+        let rangeParentNode = document.querySelector(`[data-range-id='${rangeId}']`);
+        
+        let stats = document.createElement("div");
+        
+        stats.innerHTML = ``
+
+                            rangeParentNode.appendChild(stats);
+
+    }
+
     renderedNodes.forEach((node, id) => {
         
         if (!color) {
@@ -141,7 +147,6 @@ function renderSelectedRange(startDate, endDate, rangeId, color) {
                 node.style.backgroundColor = '';
             }
         }
-        
     })
 
     function calcTimeDiff(aDate, bDate) {
@@ -200,15 +205,22 @@ function addNewRange() {
     rangeControls.classList.add("custom_range");
     rangeControls.dataset.rangeId = rangeId;
 
-    rangeControls.innerHTML = `<div>
-                                    <label>start date</label>
-                                    <input class="date_start-custom" data-custom-range-start="${rangeId}" type="date" value="${currentStartDate}">
+    rangeControls.innerHTML = `<div class="flex">
+                                    <div>
+                                        <label>start date</label>
+                                        <input class="date_start-custom" data-custom-range-start="${rangeId}" type="date" value="${currentStartDate}">
+                                    </div>
+                                    <div>
+                                        <label>end date</label>
+                                        <input class="date_end-custom" data-custom-range-end="${rangeId}" type="date" value="${currentStartDate}">
+                                    </div>
+                                    <p class="close-range" data-close-range-id="${rangeId}">X</p>
                                 </div>
-                                <div>
-                                    <label>end date</label>
-                                    <input class="date_end-custom" data-custom-range-end="${rangeId}" type="date" value="${currentStartDate}">
-                                </div>
-                                <p class="close-range" data-close-range-id="${rangeId}">X</p>`;
+                                <div class="flex">
+                                    <p class="nodes-to_live">Total: </p>
+                                    <p class="nodes-lived">Done: </p>
+                                    <p class="nodes-left">Left: </p>
+                                </div>`;
     menuContainer.appendChild(rangeControls);
 }
 renderLifeTotal()
