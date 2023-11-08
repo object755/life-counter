@@ -29,7 +29,8 @@ ageContainer.addEventListener('click', (e) => {
     if (target.classList.contains("close-range")) {
         let rangeId = target.dataset.closeRangeId;
 
-        document.querySelector(`[data-range-id='${rangeId}'`).remove()
+        document.querySelector(`[data-range-id='${rangeId}'`).remove();
+        renderLifeTotal();
     }
 })
 
@@ -123,14 +124,8 @@ function renderSelectedRange(startDate, endDate, rangeId, color) {
     let renderedNodes = document.querySelectorAll(".life_nodes > div");
 
     if (rangeId) {
-        let rangeParentNode = document.querySelector(`[data-range-id='${rangeId}']`);
-        
-        let stats = document.createElement("div");
-        
-        stats.innerHTML = ``
-
-                            rangeParentNode.appendChild(stats);
-
+        let totalTitle = document.querySelector(`[data-range-id-total='${rangeId}']`);
+        totalTitle.innerHTML = `Total ${nodeName.toLowerCase()}: ${totalNodes}`
     }
 
     renderedNodes.forEach((node, id) => {
@@ -139,7 +134,7 @@ function renderSelectedRange(startDate, endDate, rangeId, color) {
             id < totalNodes ? node.className = "lived" : node.classList.remove("lived");
         
         } else if (rangeId) {
-            if (id > diffNodes && id <= (totalNodes+diffNodes)) {
+            if (id >= diffNodes && id < (totalNodes+diffNodes)) {
                 // node.dataset.customRangeId = rangeId;
                 node.style.backgroundColor = color;
                 node.classList.add('mix')
@@ -216,11 +211,7 @@ function addNewRange() {
                                     </div>
                                     <p class="close-range" data-close-range-id="${rangeId}">X</p>
                                 </div>
-                                <div class="flex">
-                                    <p class="nodes-to_live">Total: </p>
-                                    <p class="nodes-lived">Done: </p>
-                                    <p class="nodes-left">Left: </p>
-                                </div>`;
+                                <p class="nodes-to_live" data-range-id-total='${rangeId}'></p>`;
     menuContainer.appendChild(rangeControls);
 }
 renderLifeTotal()
