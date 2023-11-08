@@ -103,7 +103,7 @@ p {
 }
 
 div.lived {
-  background-color: rgb(33, 173, 66);
+  background: rgb(33, 173, 66);
   border: 1px solid rgb(27, 82, 97);
 }
 
@@ -118,21 +118,36 @@ div.lived {
   align-items: center;
 }
 .add-button {
-  width: 100%;
+  width: 50%;
   border-radius: 6px;
+  border: none;
+}
+.add-button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: rgb(33, 173, 66);
+  border: none;
 }
 
 .custom_range {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  border-radius: 8px;
+  padding: 5px;
+}
+.custom_range p {
+  margin: 0;
+}
+.custom_range p,
+.custom_range label {
+  color: black;
+}
+.custom_range label {
+  padding: 5px;
 }
 .custom_range div {
   width: 120px;
-}
-
-.mix {
-  mix-blend-mode: plus-lighter;
 }
 
 .close-range {

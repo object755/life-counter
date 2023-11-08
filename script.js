@@ -67,11 +67,11 @@ function renderLifeSpent(totalDaysToLive) {
     let [nodeName] = getFormData();
     let totalNodes = renderSelectedRange();
 
-    document.querySelectorAll(".date_start-custom").forEach((node, id) => {
-        let rangeId = id+1
+    document.querySelectorAll(".date_start-custom").forEach(node => {
+        let rangeId = node.dataset.customRangeStart;
         let nodeStartDate = node.value;
         let nodeEndDate = document.querySelector(`[data-custom-range-end='${rangeId}']`).value;
-        let color = randColor();
+        let color = getColorById(rangeId);
         
         renderSelectedRange(nodeStartDate, nodeEndDate, rangeId, color);
     })
@@ -134,12 +134,19 @@ function renderSelectedRange(startDate, endDate, rangeId, color) {
             id < totalNodes ? node.className = "lived" : node.classList.remove("lived");
         
         } else if (rangeId) {
-            if (id >= diffNodes && id < (totalNodes+diffNodes)) {
-                // node.dataset.customRangeId = rangeId;
-                node.style.backgroundColor = color;
-                node.classList.add('mix')
-            } else if (id > diffNodes && id <= (totalNodes+diffNodes)) {
-                node.style.backgroundColor = '';
+            let isInRange = id >= diffNodes && id < (totalNodes+diffNodes);
+            let isOutOfRange = id > diffNodes && id <= (totalNodes+diffNodes);
+
+            let nodeBgColor = node.style.background;
+            
+            const regex = /rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/g;
+            const rgbColors = nodeBgColor.match(regex);
+            
+            if (isInRange && !nodeBgColor) {
+                node.style.background = `linear-gradient(45deg, ${color}, ${color})`
+            
+            } else if (isInRange && nodeBgColor) {
+                node.style.background = `linear-gradient(45deg, ${rgbColors.slice(1).join(",")}, ${getColorById(rangeId)})`;
             }
         }
     })
@@ -199,6 +206,7 @@ function addNewRange() {
     let rangeControls = document.createElement("div");
     rangeControls.classList.add("custom_range");
     rangeControls.dataset.rangeId = rangeId;
+    rangeControls.style.backgroundColor = getColorById(rangeId);
 
     rangeControls.innerHTML = `<div class="flex">
                                     <div>
@@ -211,7 +219,25 @@ function addNewRange() {
                                     </div>
                                     <p class="close-range" data-close-range-id="${rangeId}">X</p>
                                 </div>
-                                <p class="nodes-to_live" data-range-id-total='${rangeId}'></p>`;
+                                <p class="nodes-to_live" data-range-id-total='${rangeId}'>Total ${dataTypeSelect.value}: 0</p>`;
     menuContainer.appendChild(rangeControls);
 }
+
+function getColorById(id) {
+    const colors = [
+        "orange",  "#33AAFF", "#AA33FF", "#ffaa33", "#33FF57", "#ff5733",
+        "#5733FF", "#FFAA33", "#33FFAA", "#AA33FF", "#FF5733",
+        "#33FF57", "#5733FF", "#FF33AA", "#33AAFF", "#AA33FF",
+        "#FFAA33", "#33FFAA", "#AA33FF", "#FF5733", "#33FF57",
+        "#5733FF", "#FF33AA", "#33AAFF", "#AA33FF", "#FFAA33",
+        "#33FFAA", "#AA33FF", "#FF5733", "#33FF57", "#5733FF",
+        "#FF33AA", "#33AAFF", "#AA33FF", "#FFAA33", "#33FFAA",
+        "#AA33FF", "#FF5733", "#33FF57", "#5733FF", "#FF33AA",
+        "#33AAFF", "#AA33FF", "#FFAA33", "#33FFAA", "#AA33FF",
+        "#FF5733", "#33FF57", "#5733FF", "#FF33AA", "#33AAFF"
+      ];
+
+    return colors[id];
+}
+
 renderLifeTotal()
