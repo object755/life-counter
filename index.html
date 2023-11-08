@@ -10,41 +10,44 @@
     <div class="container">
         
         <div class="container-age">
-            <div class="flex">
-                <input class="node_size" type="range" min="1" max="6" value="5">
+            <div class="container-age-settings">
+                <div class="flex">
+                    <input class="node_size" type="range" min="1" max="6" value="5">
+                </div>
+                
+                <div class="container-age-controls">
+                    <div>
+                        <label for="dataTypeSelect">Show by</label>
+                        <select id="dataTypeSelect">
+                        <option value="days">days</option>
+                        <option value="weeks" selected>weeks</option>
+                        <option value="years">years</option>
+                    </select>
+                    </div>
+                    <div>
+                        <label for="birthAge">Date of birth</label>
+                        <input id="birthAge" class="age_birth" type="date" value="1970-01-01">
+                    </div>
+                    <div>
+                        <label for="totalAge">Years</label>
+                        <input class="age_total" type="number" value="75">
+                    </div>
+                </div>
+                
+    
+                <div>
+                    <p class="nodes-to_live">Weeks to live: </p>
+                    <p class="nodes-lived">Weeks lived:</p>
+                    <p class="nodes-left">Weeks left: </p>
+                </div>
+                
+                <div class="add-container">
+                    <div class="add-range">
+                        <button class="add-button">add new range</button>
+                    </div>
+                </div>
             </div>
             
-            <div class="container-age-controls">
-                <div>
-                    <label for="dataTypeSelect">Show by</label>
-                    <select id="dataTypeSelect">
-                    <option value="days">days</option>
-                    <option value="weeks" selected>weeks</option>
-                    <option value="years">years</option>
-                </select>
-                </div>
-                <div>
-                    <label for="birthAge">Date of birth</label>
-                    <input id="birthAge" class="age_birth" type="date" value="1970-01-01">
-                </div>
-                <div>
-                    <label for="totalAge">Years</label>
-                    <input class="age_total" type="number" value="75">
-                </div>
-            </div>
-            
-
-            <div>
-                <p class="nodes-to_live">Weeks to live: </p>
-                <p class="nodes-lived">Weeks lived:</p>
-                <p class="nodes-left">Weeks left: </p>
-            </div>
-            
-            <div class="add-container">
-                <div class="add-range">
-                    <button class="add-button">add new range</button>
-                </div>
-            </div>
         </div>
         
         <div class="life_nodes">

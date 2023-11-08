@@ -208,16 +208,18 @@ function addNewRange() {
     rangeControls.dataset.rangeId = rangeId;
     rangeControls.style.backgroundColor = getColorById(rangeId);
 
-    rangeControls.innerHTML = `<div class="flex">
-                                    <div>
-                                        <label>start date</label>
+    rangeControls.innerHTML = `<p class="close-range" data-close-range-id="${rangeId}">X</p>
+                                <h4 id="editableTitle" class="editable" contenteditable="true">Title</h4>
+                                <div class="flex">                                    
+                                    <div class="date-container">
+                                        <label>start</label>
                                         <input class="date_start-custom" data-custom-range-start="${rangeId}" type="date" value="${currentStartDate}">
                                     </div>
-                                    <div>
-                                        <label>end date</label>
+                                    <div class="date-container">
+                                        <label>end</label>
                                         <input class="date_end-custom" data-custom-range-end="${rangeId}" type="date" value="${currentStartDate}">
                                     </div>
-                                    <p class="close-range" data-close-range-id="${rangeId}">X</p>
+                                    
                                 </div>
                                 <p class="nodes-to_live" data-range-id-total='${rangeId}'>Total ${dataTypeSelect.value}: 0</p>`;
     menuContainer.appendChild(rangeControls);

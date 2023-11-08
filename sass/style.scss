@@ -6,8 +6,15 @@ p {
     margin: 5px;
 }
 
+input,
+select {
+    border-radius: 4px;
+    border: none;
+}
+
 .flex {
     display: flex;
+    justify-content: center;
     gap: 10px;
 }
 
@@ -24,9 +31,15 @@ p {
         padding: 10px;
         display: flex;
         gap: 10px;
-        background-color: #0F3460;
+        background-color: #0e2f58;
         border-radius: 8px;
         min-width: 270px;
+
+        &-settings {
+            padding: 8px;
+            background-color: #0d2b51;
+            border-radius: 8px;
+        }
 
         &-controls {
             display: flex;
@@ -56,10 +69,12 @@ p {
     &_nodes {
         display: flex;
         flex-wrap: wrap;
+        // justify-content: center;
+        // align-self: center;
         width: 85%;
-        padding: 10px;
-        margin: 0 auto;
-        background-color: #0F3460;
+        padding: 8px;
+        // margin: 0 auto;
+        background-color: #0e2f58;
         border-radius: 8px;
 
         div {
@@ -108,6 +123,7 @@ p {
 label,
 p {
     color: #c8c8c8;
+    padding: 7px;
 }
 
 .nodes-lived {
@@ -139,6 +155,7 @@ div.lived {
         width: 50%;
         border-radius: 6px;
         border: none;
+        transition: all 0.1s;
         
         &:hover {
             cursor: pointer;
@@ -156,6 +173,10 @@ div.lived {
     border-radius: 8px;
     padding: 5px;
 
+    .date-container {
+        width: 120px;
+    }
+
     p {
         margin: 0;
     }
@@ -168,21 +189,27 @@ div.lived {
     label {
         padding: 5px;
     }
-
-    div {
-        width: 120px;
-    }
-}
-
-.mix {
-    // mix-blend-mode: plus-lighter;
 }
 
 .close-range {
+    position: absolute;
     cursor: pointer;
     user-select: none;
+    display: flex;
+    align-self: flex-end;
 
     &:hover {
-        color: red;
+        color: white;
     }
+}
+
+.editable {
+    padding: 5px;
+    margin: 3px;
+    height: fit-content;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    max-width: 220px;
+    margin: 0 auto;
 }
