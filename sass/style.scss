@@ -148,9 +148,22 @@ div.lived {
 .custom_range {
     display: flex;
     justify-content: space-between;
-    // flex-direction: column;
+    align-items: flex-end;
 
     div {
         width: 120px;
+    }
+}
+
+.mix {
+    mix-blend-mode: plus-lighter;
+}
+
+.close-range {
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+        color: red;
     }
 }

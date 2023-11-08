@@ -13,9 +13,27 @@ addRange.addEventListener("click", addNewRange);
 
 
 ageContainer.addEventListener('input', (e) => {
-    let tagName = e.target.tagName;
+    let target = e.target;
+    let tagName = target.tagName;
+    
     if (tagName === "INPUT" || tagName === "SELECT") {
         renderLifeTotal();
+    }
+
+    if (target.classList.contains("close-range")) {
+        let rangeId = target.dataset.rangeId;
+
+        delete document.querySelector(`[data-range-id='${rangeId}'`)
+    }
+})
+
+ageContainer.addEventListener('click', (e) => {
+    let target = e.target;
+    
+    if (target.classList.contains("close-range")) {
+        let rangeId = target.dataset.closeRangeId;
+
+        document.querySelector(`[data-range-id='${rangeId}'`).remove()
     }
 })
 
@@ -55,10 +73,11 @@ function renderLifeSpent(totalDaysToLive) {
     document.querySelectorAll(".date_start-custom").forEach((node, id) => {
         // node.value = birthDate.value;
         
+        let rangeId = id+1
         let nodeStartDate = node.value;
-        let nodeEndDate = document.querySelector(`[data-custom-range-end='${id+1}']`).value;
+        let nodeEndDate = document.querySelector(`[data-custom-range-end='${rangeId}']`).value;
         let color = randColor();
-        renderSelectedRange(nodeStartDate, nodeEndDate, color);
+        renderSelectedRange(nodeStartDate, nodeEndDate, rangeId, color);
     })
 
 
@@ -72,7 +91,7 @@ function renderLifeSpent(totalDaysToLive) {
     }
 }
 
-function renderSelectedRange(startDate, endDate, color) {
+function renderSelectedRange(startDate, endDate, rangeId, color) {
     let [nodeName] = getFormData();
 
     let bDate = new Date(birthDate.value);
@@ -112,8 +131,15 @@ function renderSelectedRange(startDate, endDate, color) {
         
         if (!color) {
             id < totalNodes ? node.className = "lived" : node.classList.remove("lived");
-        } else {                                                                                     //FIX HERE
-            id > diffNodes && id <= (totalNodes+diffNodes) ? node.style.backgroundColor = 'orange' : node.style.backgroundColor = '';
+        
+        } else if (rangeId) {
+            if (id > diffNodes && id <= (totalNodes+diffNodes)) {
+                // node.dataset.customRangeId = rangeId;
+                node.style.backgroundColor = color;
+                node.classList.add('mix')
+            } else if (id > diffNodes && id <= (totalNodes+diffNodes)) {
+                node.style.backgroundColor = '';
+            }
         }
         
     })
@@ -166,20 +192,23 @@ function getFormData() {
 
 function addNewRange() {
     let currentStartDate = birthDate.value;
-    let totalCustomRanges = document.querySelectorAll(".date_start-custom").length;
+    let rangeNodes = document.querySelectorAll("[data-range-id]")
+    let rangeId = +rangeNodes[rangeNodes.length - 1]?.dataset?.rangeId + 1 || 1;
     let menuContainer = document.querySelector(".container-age");
     
     let rangeControls = document.createElement("div");
     rangeControls.classList.add("custom_range");
+    rangeControls.dataset.rangeId = rangeId;
 
     rangeControls.innerHTML = `<div>
                                     <label>start date</label>
-                                    <input class="date_start-custom" data-custom-range-start="${totalCustomRanges+1}" type="date" value="${currentStartDate}">
+                                    <input class="date_start-custom" data-custom-range-start="${rangeId}" type="date" value="${currentStartDate}">
                                 </div>
                                 <div>
                                     <label>end date</label>
-                                    <input class="date_end-custom" data-custom-range-end="${totalCustomRanges+1}" type="date" value="${currentStartDate}">
-                                </div>`;
+                                    <input class="date_end-custom" data-custom-range-end="${rangeId}" type="date" value="${currentStartDate}">
+                                </div>
+                                <p class="close-range" data-close-range-id="${rangeId}">X</p>`;
     menuContainer.appendChild(rangeControls);
 }
 renderLifeTotal()
